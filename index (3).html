@@ -1,0 +1,726 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Anglais 3ème – Present Perfect + Verbes irréguliers (Quiz)</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card:#111a2e;
+      --muted:#9fb0d0;
+      --text:#eef3ff;
+      --line:#243255;
+      --ok:#20c997;
+      --bad:#ff5c7a;
+      --btn:#2b5cff;
+      --btn2:#1d2a4b;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 800px at 20% 10%, #15224a 0%, var(--bg) 55%);
+      color:var(--text);
+    }
+    header, main, footer{ max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+    header{ margin-top: 24px; }
+    h1{ margin:0 0 8px 0; font-size: 22px; font-weight: 800; }
+    p{ margin: 6px 0 0; color: var(--muted); line-height: 1.5; }
+
+    .toolbar{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      margin: 14px 0 18px;
+    }
+    button{
+      border:0; padding: 10px 14px; border-radius: 10px;
+      background: var(--btn); color: white; font-weight: 800;
+      cursor: pointer;
+    }
+    button.secondary{ background: var(--btn2); }
+    button:focus{ outline: 2px solid #89a6ff; outline-offset:2px; }
+
+    .pill{
+      padding: 8px 12px; border: 1px solid var(--line);
+      border-radius: 999px; color: var(--muted); font-size: 13px;
+      background: rgba(9,14,28,.25);
+    }
+    .toggle{
+      display:flex; gap:8px; align-items:center;
+      padding: 8px 12px; border-radius: 999px; border:1px solid var(--line);
+      background: rgba(9,14,28,.25); color: var(--muted); font-size: 13px;
+    }
+    .toggle input{ accent-color: var(--btn); }
+    .select{
+      display:flex; gap:8px; align-items:center;
+      padding: 8px 12px; border-radius: 999px; border:1px solid var(--line);
+      background: rgba(9,14,28,.25); color: var(--muted); font-size: 13px;
+    }
+    select{
+      background: rgba(9,14,28,.35);
+      border: 1px solid rgba(36,50,85,.8);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 6px 10px;
+      font-weight: 700;
+    }
+    .score{
+      margin-left:auto;
+      font-weight:900;
+      color:#dbe7ff;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      background: rgba(9,14,28,.25);
+      white-space:nowrap;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap: 14px;
+      align-items:start;
+    }
+    @media (max-width: 980px){
+      .grid{ grid-template-columns: 1fr; }
+      .score{ margin-left:0; }
+    }
+
+    .section, .sidecard{
+      background: rgba(17,26,46,.85);
+      border: 1px solid rgba(36,50,85,.9);
+      border-radius: 16px;
+      overflow:hidden;
+      box-shadow: 0 12px 30px rgba(0,0,0,.25);
+      margin: 14px 0;
+    }
+    .section-title, .side-title{
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(36,50,85,.8);
+      display:flex; align-items:baseline; justify-content:space-between; gap:10px;
+    }
+    .section-title h2, .side-title h2{ margin:0; font-size: 15px; letter-spacing:.2px; }
+    .section-title small, .side-title small{ color: var(--muted); }
+    .subscore{
+      color: var(--muted);
+      font-weight: 800;
+      margin-left:auto;
+      white-space:nowrap;
+    }
+
+    .q{
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(36,50,85,.55);
+      display:grid; gap:10px;
+    }
+    .q:last-child{ border-bottom:0; }
+    .q-meta{ display:flex; gap:10px; align-items:flex-start; }
+    .q-number{ font-weight: 900; color: #cfe0ff; min-width: 60px; }
+    .q-text{ color: var(--text); line-height:1.45; flex:1; }
+    .hint{ color: var(--muted); font-size: 12.5px; margin-top: 4px; }
+
+    .answer{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    }
+    input[type="text"]{
+      flex: 1 1 360px; min-width: 240px;
+      padding: 10px 12px; border-radius: 12px;
+      border: 1px solid rgba(36,50,85,.9);
+      background: rgba(9,14,28,.55);
+      color: var(--text); font-size: 14px;
+    }
+    input[type="text"]::placeholder{ color: #7f92bb; }
+    .status{
+      font-weight: 900;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(36,50,85,.9);
+      background: rgba(9,14,28,.4);
+      color: var(--muted);
+      white-space:nowrap;
+    }
+    .status.ok{ border-color: rgba(32,201,151,.7); color: var(--ok); }
+    .status.bad{ border-color: rgba(255,92,122,.7); color: var(--bad); }
+
+    .correction{
+      display:none;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px dashed rgba(255,92,122,.55);
+      background: rgba(255,92,122,.08);
+      color: #ffd5dd;
+      line-height:1.45;
+    }
+    .correction strong{ color:#fff; }
+    .correction.ok{
+      border: 1px dashed rgba(32,201,151,.55);
+      background: rgba(32,201,151,.08);
+      color: #c9ffef;
+    }
+
+    .side-body{ padding: 14px 16px; color: var(--muted); }
+    .side-body h3{ margin: 10px 0 8px; font-size: 13.5px; color: var(--text); }
+    .side-body ul{ margin: 8px 0 0 18px; line-height: 1.55; }
+    .side-body li{ margin: 6px 0; }
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color:#dbe7ff;
+    }
+    footer{ margin: 10px auto 30px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Anglais 3ème – Present Perfect + Verbes irréguliers (Quiz corrigé)</h1>
+    <p>
+      Écrivez vos réponses puis cliquez sur <strong>« Valider mes réponses »</strong>.
+      Vert = correct • Rouge = incorrect + correction.
+      Bouton <strong>« Nouvelles questions »</strong> = nouveau tirage.
+    </p>
+  </header>
+
+  <main class="grid">
+    <div>
+      <div class="toolbar">
+        <button id="validateBtn">Valider mes réponses</button>
+        <button id="newBtn" class="secondary">Nouvelles questions</button>
+        <button id="resetBtn" class="secondary">Réinitialiser</button>
+
+        <span class="toggle">
+          <input type="checkbox" id="strictMode" />
+          <label for="strictMode">Mode strict</label>
+        </span>
+
+        <span class="select">
+          <label for="difficulty">Niveau :</label>
+          <select id="difficulty">
+            <option value="6e">6e</option>
+            <option value="5e">5e</option>
+            <option value="4e">4e</option>
+            <option value="3e" selected>3e</option>
+            <option value="2nde">2nde</option>
+          </select>
+        </span>
+
+        <span class="select">
+          <label for="amount">Nombre de questions :</label>
+          <select id="amount">
+            <option value="standard" selected>Standard</option>
+            <option value="plus">Plus</option>
+            <option value="max">Max</option>
+          </select>
+        </span>
+
+        <span id="score" class="score">Note : —</span>
+      </div>
+
+      <div class="section">
+        <div class="section-title">
+          <h2>1) Present Perfect (verbes entre parenthèses)</h2>
+          <small>ever / never / just / already / yet / for / since</small>
+          <span id="sub1" class="subscore">—</span>
+        </div>
+        <div class="questions" id="questions1"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">
+          <h2>2) Traduire en anglais (niveau 3ème)</h2>
+          <small>phrases courtes</small>
+          <span id="sub2" class="subscore">—</span>
+        </div>
+        <div class="questions" id="questions2"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">
+          <h2>3) Parler de son expérience (phrases simples)</h2>
+          <small>ever / never / already / yet</small>
+          <span id="sub3" class="subscore">—</span>
+        </div>
+        <div class="questions" id="questions3"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">
+          <h2>4) Verbes irréguliers (Prétérit + Participe passé)</h2>
+          <small> go → went → gone</small>
+          <span id="sub4" class="subscore">—</span>
+        </div>
+        <div class="questions" id="questions4"></div>
+      </div>
+    </div>
+
+    <aside class="sidecard">
+      <div class="side-title">
+        <h2>Erreurs fréquentes (3ème)</h2>
+        <small>Rappels</small>
+      </div>
+      <div class="side-body">
+        <h3>Present Perfect (formule)</h3>
+        <ul>
+          <li>Affirmatif : <span class="kbd">have/has + participe passé</span></li>
+          <li>Négatif : <span class="kbd">haven’t/hasn’t + participe passé</span></li>
+          <li>Question : <span class="kbd">Have/Has + sujet + participe passé ?</span></li>
+        </ul>
+
+        <h3><span class="kbd">for</span> vs <span class="kbd">since</span></h3>
+        <ul>
+          <li><strong>for</strong> + durée : <em>for 2 years</em></li>
+          <li><strong>since</strong> + date : <em>since 2021</em></li>
+        </ul>
+
+        <h3><span class="kbd">yet</span> / <span class="kbd">already</span> / <span class="kbd">just</span></h3>
+        <ul>
+          <li><strong>yet</strong> : fin de phrase en négation/question</li>
+          <li><strong>already</strong> : plutôt en affirmatif</li>
+          <li><strong>just</strong> : “tout juste” (action récente)</li>
+        </ul>
+
+        <h3>Verbes irréguliers</h3>
+        <ul>
+          <li>En Present Perfect, on utilise le <strong>participe passé</strong> : <em>done, seen, gone…</em></li>
+          <li>Attention : <em>write → wrote → written</em></li>
+        </ul>
+
+        <h3>Mode strict</h3>
+        <ul>
+          <li>Strict : il faut écrire la correction exactement.</li>
+          <li>Normal : contractions acceptées (has not / hasn’t).</li>
+        </ul>
+      </div>
+    </aside>
+  </main>
+
+  <footer>
+    Astuce : appuyez sur <span class="kbd">Entrée</span> dans un champ pour valider.
+  </footer>
+
+<script>
+  // -----------------------------
+  // Utilitaires
+  // -----------------------------
+  function escapeHtml(str){
+    return String(str)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;");
+  }
+
+  function normalize(s){
+    return String(s)
+      .trim()
+      .toLowerCase()
+      .replaceAll("’","'")
+      .replace(/\s+/g, " ");
+  }
+
+  function sampleUnique(array, n){
+    const copy = [...array];
+    for (let i = copy.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy.slice(0, Math.min(n, copy.length));
+  }
+
+  function strictMode(){
+    return document.getElementById("strictMode").checked;
+  }
+
+  
+  function getAmount(){
+    const v = document.getElementById("amount").value;
+    const level = getLevel();
+
+    // Base (par classe) : PP / Traduction / Expérience / Irréguliers
+    // Objectif : progression simple du collège -> lycée
+    let base;
+    if (level === "6e")      base = { pp:6,  tr:6,  exp:4, irr:6  }; // total 22 (PP vaut 2 pts)
+    else if (level === "5e") base = { pp:8,  tr:6,  exp:4, irr:8  };
+    else if (level === "4e") base = { pp:10, tr:8,  exp:6, irr:8  };
+    else if (level === "3e") base = { pp:12, tr:10, exp:6, irr:10 };
+    else                     base = { pp:14, tr:12, exp:8, irr:12 }; // 2nde
+
+    // Variante selon le menu "Nombre de questions"
+    // standard = base, plus = +25% env., max = +50% env.
+    const factor = (v === "plus") ? 1.25 : (v === "max" ? 1.5 : 1.0);
+
+    const scaled = {
+      pp:  Math.max(4,  Math.round(base.pp  * factor)),
+      tr:  Math.max(4,  Math.round(base.tr  * factor)),
+      exp: Math.max(3,  Math.round(base.exp * factor)),
+      irr: Math.max(4,  Math.round(base.irr * factor)),
+    };
+
+    return scaled;
+  }
+
+
+  // -----------------------------
+  // Pools niveau 3ème
+  // -----------------------------
+
+  const POOL_PP = [
+    { prompt:"You ______ (ever / eat) sushi?", hint:"Question au Present Perfect", answers:["have you ever eaten"], strict:"have you ever eaten", rule:"Have + sujet + ever + PP." },
+    { prompt:"I ______ (never / be) to London.", hint:"been to = expérience", answers:["have never been to london"], strict:"have never been to london", rule:"Never entre have et PP." },
+    { prompt:"She ______ (just / finish) her homework.", hint:"just = action récente", answers:["has just finished"], strict:"has just finished", rule:"Just entre has et PP." },
+    { prompt:"We ______ (already / see) this film.", hint:"already en affirmatif", answers:["have already seen"], strict:"have already seen", rule:"Already souvent entre have et PP." },
+    { prompt:"They ______ (not / call) me yet.", hint:"négation + yet", answers:["haven't called yet","have not called yet"], strict:"haven't called yet", rule:"Yet en fin de phrase." },
+    { prompt:"He ______ (live) here since 2020.", hint:"since + date", answers:["has lived since 2020","has been living since 2020"], strict:"has lived since 2020", rule:"Since + date." },
+    { prompt:"I ______ (not / do) my project yet.", hint:"négation + yet", answers:["haven't done my project yet","have not done my project yet"], strict:"haven't done my project yet", rule:"Do → done." },
+    { prompt:"My parents ______ (travel) for 3 years.", hint:"for + durée", answers:["have travelled for 3 years","have traveled for 3 years"], strict:"have travelled for 3 years", rule:"For + durée." },
+    { prompt:"Where is Tom? He ______ (go) to the supermarket.", hint:"gone = parti", answers:["has gone"], strict:"has gone", rule:"go → gone." },
+    { prompt:"______ you ______ (finish) yet?", hint:"question + yet", answers:["have you finished"], strict:"have you finished", rule:"Have + sujet + PP … yet ?" },
+    { prompt:"Sarah ______ (write) three emails today.", hint:"today = période pas finie", answers:["has written"], strict:"has written", rule:"write → written." },
+    { prompt:"I ______ (lose) my keys!", hint:"résultat au présent", answers:["have lost"], strict:"have lost", rule:"lose → lost." },
+    { prompt:"We ______ (not / meet) our new teacher yet.", hint:"meet → met", answers:["haven't met our new teacher yet","have not met our new teacher yet"], strict:"haven't met our new teacher yet", rule:"meet → met." },
+    { prompt:"She ______ (buy) a new phone.", hint:"buy → bought", answers:["has bought"], strict:"has bought", rule:"buy → bought." }
+  ];
+
+  const POOL_TR = [
+    { prompt:"Traduire : « Je n’ai jamais mangé de sushi. »", hint:"never + Present Perfect", answers:["i have never eaten sushi","i've never eaten sushi"], strict:"i have never eaten sushi", rule:"eat → eaten." },
+    { prompt:"Traduire : « Il a déjà fait ses devoirs. »", hint:"already", answers:["he has already done his homework"], strict:"he has already done his homework", rule:"do → done." },
+    { prompt:"Traduire : « Nous n’avons pas encore fini. »", hint:"yet (négation)", answers:["we haven't finished yet","we have not finished yet"], strict:"we haven't finished yet", rule:"Yet en fin de phrase." },
+    { prompt:"Traduire : « Elle habite ici depuis 2020. »", hint:"since + date", answers:["she has lived here since 2020","she has been living here since 2020"], strict:"she has lived here since 2020", rule:"Since + date." },
+    { prompt:"Traduire : « Depuis quand le connais-tu ? »", hint:"Since when + Present Perfect", answers:["since when have you known him"], strict:"since when have you known him", rule:"know → known." },
+    { prompt:"Traduire : « J’ai juste regardé un film. »", hint:"just", answers:["i have just watched a film","i've just watched a film"], strict:"i have just watched a film", rule:"Just entre have et PP." },
+    { prompt:"Traduire : « Ils sont partis à l’école. » (pas revenus)", hint:"gone", answers:["they have gone to school"], strict:"they have gone to school", rule:"gone = parti." },
+    { prompt:"Traduire : « J’ai vu ce professeur deux fois. »", hint:"see → seen", answers:["i have seen this teacher twice"], strict:"i have seen this teacher twice", rule:"see → seen." },
+    { prompt:"Traduire : « Il n’a pas appelé depuis lundi. »", hint:"since + jour", answers:["he hasn't called since monday","he has not called since monday"], strict:"he hasn't called since monday", rule:"Since + point de départ." },
+    { prompt:"Traduire : « On a joué à ce jeu pendant 2 heures. »", hint:"for + durée", answers:["we have played this game for 2 hours"], strict:"we have played this game for 2 hours", rule:"For + durée." }
+  ];
+
+  const POOL_EXP = [
+    { prompt:"Écris : (never / to work) → dans un restaurant.", hint:" I have never worked in a restaurant.", answers:["i have never worked in a restaurant","i've never worked in a restaurant"], strict:"i have never worked in a restaurant", rule:"Never entre have et PP." },
+    { prompt:"Écris : (already / to visit) → Paris.", hint:" I have already visited Paris.", answers:["i have already visited paris","i've already visited paris"], strict:"i have already visited paris", rule:"Already en affirmatif." },
+    { prompt:"Écris : (not / to finish / yet) → mes devoirs.", hint:" I haven’t finished my homework yet.", answers:["i haven't finished my homework yet","i have not finished my homework yet"], strict:"i haven't finished my homework yet", rule:"Yet en fin de phrase." },
+    { prompt:"Écris une question avec « ever » : (to try) bubble tea.", hint:" Have you ever tried bubble tea?", answers:["have you ever tried bubble tea"], strict:"have you ever tried bubble tea", rule:"Have you ever + PP ?" },
+    { prompt:"Phrase perso : commence par “I have just …”", hint:" I have just arrived.", pattern:/^(i\s+have|i've)\s+just\s+.+/i, strictPattern:/^(i\s+have)\s+just\s+.+/i, expected:"I have just + verbe (PP)…", rule:"Just entre have et PP." },
+    { prompt:"Phrase perso : commence par “I have already …”", hint:" I have already done it.", pattern:/^(i\s+have|i've)\s+already\s+.+/i, strictPattern:/^(i\s+have)\s+already\s+.+/i, expected:"I have already + PP…", rule:"Already entre have et PP." }
+  ];
+
+  // Verbes irréguliers (3ème) – très classiques
+  const IRR_LIST = [
+    { base:"go", past:"went", pp:"gone" },
+    { base:"eat", past:"ate", pp:"eaten" },
+    { base:"see", past:"saw", pp:"seen" },
+    { base:"do", past:"did", pp:"done" },
+    { base:"write", past:"wrote", pp:"written" },
+    { base:"take", past:"took", pp:"taken" },
+    { base:"make", past:"made", pp:"made" },
+    { base:"buy", past:"bought", pp:"bought" },
+    { base:"have", past:"had", pp:"had" },
+    { base:"give", past:"gave", pp:"given" },
+    { base:"get", past:"got", pp:"got" },
+    { base:"find", past:"found", pp:"found" },
+    { base:"drink", past:"drank", pp:"drunk" },
+    { base:"speak", past:"spoke", pp:"spoken" },
+    { base:"run", past:"ran", pp:"run" },
+    { base:"come", past:"came", pp:"come" },
+    { base:"begin", past:"began", pp:"begun" },
+    { base:"know", past:"knew", pp:"known" }
+  ];
+
+  // Deux types de questions irrégulières : compléter la "chaîne" OU mettre le PP dans une phrase
+  function buildIrregularPool(){
+    const pool = [];
+
+    // Type A : compléter les 2 formes (prétérit + PP)
+    IRR_LIST.forEach(v => {
+      pool.push({
+        type:"chain",
+        prompt:`Complète : ${v.base} → ______ → ______`,
+        hint:"Écris : prétérit puis participe passé ( go → went → gone).",
+        answers:[`${v.past} ${v.pp}`],
+        strict:`${v.past} ${v.pp}`,
+        expected:`${v.past} ${v.pp}`,
+        rule:"On apprend la liste : base / prétérit / participe passé."
+      });
+    });
+
+    // Type B : participe passé dans une phrase (Present Perfect)
+    const sentenceTemplates = [
+      (v)=>({ prompt:`Complète (Present Perfect) : I have ______ (${v.base}) my homework.`, good:`${v.pp}`, rule:"Present Perfect = have/has + PP."}),
+      (v)=>({ prompt:`Complète (Present Perfect) : She has ______ (${v.base}) to London.`, good:`${v.pp}`, rule:"Present Perfect = have/has + PP."}),
+      (v)=>({ prompt:`Complète (Present Perfect) : We have ______ (${v.base}) this movie.`, good:`${v.pp}`, rule:"On met le participe passé."}),
+    ];
+
+    // On ne peut pas utiliser n’importe quel verbe avec n’importe quelle phrase,
+    // donc on crée des phrases simples adaptées.
+    const adapted = [
+      { base:"do", example:"I have ______ my homework.", pron:"I have", },
+      { base:"see", example:"We have ______ this film.", pron:"We have", },
+      { base:"eat", example:"He has ______ sushi.", pron:"He has", },
+      { base:"go", example:"She has ______ to school.", pron:"She has", },
+      { base:"write", example:"I have ______ an email.", pron:"I have", },
+      { base:"take", example:"They have ______ a photo.", pron:"They have", },
+      { base:"buy", example:"My dad has ______ a new car.", pron:"My dad has", },
+      { base:"drink", example:"I have ______ some water.", pron:"I have", },
+      { base:"speak", example:"She has ______ English.", pron:"She has", },
+      { base:"get", example:"We have ______ a present.", pron:"We have", },
+      { base:"find", example:"He has ______ his keys.", pron:"He has", },
+      { base:"come", example:"They have ______ home.", pron:"They have", },
+      { base:"begin", example:"We have ______ the lesson.", pron:"We have", },
+      { base:"know", example:"I have ______ him for years.", pron:"I have", },
+      { base:"make", example:"She has ______ a cake.", pron:"She has", },
+      { base:"give", example:"I have ______ you my answer.", pron:"I have", },
+      { base:"run", example:"He has ______ fast today.", pron:"He has", },
+      { base:"have", example:"I have ______ a busy day.", pron:"I have", },
+    ];
+
+    adapted.forEach(a=>{
+      const verb = IRR_LIST.find(x=>x.base===a.base);
+      if(!verb) return;
+      pool.push({
+        type:"pp-sentence",
+        prompt:`Complète : ${a.example} (${verb.base})`,
+        hint:"Écris uniquement le participe passé.",
+        answers:[verb.pp],
+        strict:verb.pp,
+        expected:verb.pp,
+        rule:"Present Perfect : have/has + participe passé."
+      });
+    });
+
+    return pool;
+  }
+
+  const POOL_IRR = buildIrregularPool();
+
+  // -----------------------------
+  // État courant
+  // -----------------------------
+  let CURRENT = { pp:[], tr:[], exp:[], irr:[] };
+
+  // -----------------------------
+  // Barème (adapté 3ème)
+  // On fait simple : 1 point par question, sauf PP (un peu plus lourd) :
+  // - Present Perfect : 2 points / question (car construction)
+  // - Traduction : 1 point / question
+  // - Expérience : 1 point / question
+  // - Irréguliers : 1 point / question
+  // La note totale dépend du nombre de questions choisi.
+  // -----------------------------
+  function pointsFor(sectionKey){
+    if(sectionKey === "pp") return 2;
+    return 1;
+  }
+
+  function totalMaxPoints(){
+    const amt = getAmount();
+    return (amt.pp * 2) + (amt.tr * 1) + (amt.exp * 1) + (amt.irr * 1);
+  }
+
+  // -----------------------------
+  // Affichage
+  // -----------------------------
+  function makeRow(sectionKey, i, item){
+    const id = `${sectionKey}_q${i}`;
+    const pts = pointsFor(sectionKey);
+    const extra = "";
+    const rule = item.rule ? `<div class="hint">Règle : ${escapeHtml(item.rule)}</div>` : "";
+
+    return `
+      <div class="q" data-sec="${sectionKey}" data-q="${i}">
+        <div class="q-meta">
+          <div class="q-number">Q${i+1} (${pts} pt${pts>1?"s":""})</div>
+          <div class="q-text">
+            <div>${escapeHtml(item.prompt)}</div>
+            <div class="hint">${escapeHtml(item.hint || "")}</div>
+                        ${rule}
+          </div>
+        </div>
+        <div class="answer">
+          <input type="text" id="${id}" placeholder="Votre réponse…" autocomplete="off" />
+          <span class="status" id="${id}_status">—</span>
+        </div>
+        <div class="correction" id="${id}_corr"></div>
+      </div>
+    `;
+  }
+
+  function render(){
+    document.getElementById("questions1").innerHTML = CURRENT.pp.map((it,i)=>makeRow("pp", i, it)).join("");
+    document.getElementById("questions2").innerHTML = CURRENT.tr.map((it,i)=>makeRow("tr", i, it)).join("");
+    document.getElementById("questions3").innerHTML = CURRENT.exp.map((it,i)=>makeRow("exp", i, it)).join("");
+    document.getElementById("questions4").innerHTML = CURRENT.irr.map((it,i)=>makeRow("irr", i, it)).join("");
+
+    document.querySelectorAll('input[type="text"]').forEach(inp => {
+      inp.addEventListener("keydown", (e) => { if (e.key === "Enter") validateAll(); });
+    });
+
+    document.getElementById("sub1").textContent = "—";
+    document.getElementById("sub2").textContent = "—";
+    document.getElementById("sub3").textContent = "—";
+    document.getElementById("sub4").textContent = "—";
+    document.getElementById("score").textContent = `Note : — / ${totalMaxPoints()}`;
+  }
+
+  // -----------------------------
+  // Tirage
+  // -----------------------------
+  function newQuestions(){
+    const amt = getAmount();
+    CURRENT.pp  = sampleUnique(POOL_PP,  amt.pp);
+    CURRENT.tr  = sampleUnique(POOL_TR,  amt.tr);
+    CURRENT.exp = sampleUnique(POOL_EXP, amt.exp);
+    CURRENT.irr = sampleUnique(POOL_IRR, amt.irr);
+    render();
+  }
+
+  // -----------------------------
+  // Correction
+  // -----------------------------
+  function validateItem(item, userRaw, isStrict){
+    // Pattern (phrase perso)
+    if (item.pattern){
+      const pat = (isStrict && item.strictPattern) ? item.strictPattern : item.pattern;
+      const ok = pat.test(userRaw.trim());
+      return {
+        ok,
+        expected: item.expected || "Structure attendue.",
+        rule: item.rule || ""
+      };
+    }
+
+    const user = normalize(userRaw);
+
+    // Strict : une seule réponse attendue
+    if (isStrict){
+      const expected = normalize(item.strict || item.answers[0]);
+      const ok = user === expected;
+      return {
+        ok,
+        expected: (item.strict || item.answers[0]),
+        rule: item.rule || ""
+      };
+    }
+
+    // Normal : plusieurs variantes
+    const expectedList = (item.answers || []).map(normalize);
+    const ok = expectedList.includes(user);
+    return {
+      ok,
+      expected: (item.answers && item.answers.length) ? item.answers[0] : "—",
+      rule: item.rule || ""
+    };
+  }
+
+  function setUI(sectionKey, i, res){
+    const id = `${sectionKey}_q${i}`;
+    const input = document.getElementById(id);
+    const status = document.getElementById(id + "_status");
+    const corr = document.getElementById(id + "_corr");
+
+    input.style.borderColor = res.ok ? "rgba(32,201,151,.75)" : "rgba(255,92,122,.75)";
+    status.classList.remove("ok","bad");
+    status.classList.add(res.ok ? "ok" : "bad");
+    status.textContent = res.ok ? "Correct" : "Incorrect";
+
+    corr.style.display = "block";
+    corr.classList.toggle("ok", res.ok);
+
+    if (res.ok){
+      corr.innerHTML = `<strong>✔</strong> Réponse correcte.`;
+    } else {
+      const rule = res.rule ? `<br><span style="opacity:.95">Règle : ${escapeHtml(res.rule)}</span>` : "";
+      corr.innerHTML = `<strong>✘</strong> Réponse incorrecte.<br>Correction : <strong>${escapeHtml(res.expected)}</strong>${rule}`;
+    }
+  }
+
+  function validateAll(){
+    const isStrict = strictMode();
+
+    let okPP=0, okTR=0, okEXP=0, okIRR=0;
+
+    CURRENT.pp.forEach((item,i)=>{
+      const v = document.getElementById(`pp_q${i}`).value;
+      const res = validateItem(item, v, isStrict);
+      if (res.ok) okPP++;
+      setUI("pp", i, res);
+    });
+
+    CURRENT.tr.forEach((item,i)=>{
+      const v = document.getElementById(`tr_q${i}`).value;
+      const res = validateItem(item, v, isStrict);
+      if (res.ok) okTR++;
+      setUI("tr", i, res);
+    });
+
+    CURRENT.exp.forEach((item,i)=>{
+      const v = document.getElementById(`exp_q${i}`).value;
+      const res = validateItem(item, v, isStrict);
+      if (res.ok) okEXP++;
+      setUI("exp", i, res);
+    });
+
+    CURRENT.irr.forEach((item,i)=>{
+      const v = document.getElementById(`irr_q${i}`).value;
+      const res = validateItem(item, v, isStrict);
+      if (res.ok) okIRR++;
+      setUI("irr", i, res);
+    });
+
+    // Points
+    const ptsPP  = okPP  * pointsFor("pp");   // 2 pts
+    const ptsTR  = okTR  * pointsFor("tr");   // 1 pt
+    const ptsEXP = okEXP * pointsFor("exp");  // 1 pt
+    const ptsIRR = okIRR * pointsFor("irr");  // 1 pt
+
+    const total = ptsPP + ptsTR + ptsEXP + ptsIRR;
+    const max = totalMaxPoints();
+
+    document.getElementById("sub1").textContent = `${ptsPP} / ${CURRENT.pp.length * 2}`;
+    document.getElementById("sub2").textContent = `${ptsTR} / ${CURRENT.tr.length}`;
+    document.getElementById("sub3").textContent = `${ptsEXP} / ${CURRENT.exp.length}`;
+    document.getElementById("sub4").textContent = `${ptsIRR} / ${CURRENT.irr.length}`;
+    document.getElementById("score").textContent = `Note : ${total} / ${max}`;
+  }
+
+  function resetAll(){
+    ["pp","tr","exp","irr"].forEach(sectionKey=>{
+      (CURRENT[sectionKey] || []).forEach((_,i)=>{
+        const id = `${sectionKey}_q${i}`;
+        const input = document.getElementById(id);
+        const status = document.getElementById(id + "_status");
+        const corr = document.getElementById(id + "_corr");
+
+        input.value = "";
+        input.style.borderColor = "rgba(36,50,85,.9)";
+        status.classList.remove("ok","bad");
+        status.textContent = "—";
+        corr.style.display = "none";
+        corr.classList.remove("ok");
+        corr.innerHTML = "";
+      });
+    });
+
+    document.getElementById("sub1").textContent = "—";
+    document.getElementById("sub2").textContent = "—";
+    document.getElementById("sub3").textContent = "—";
+    document.getElementById("sub4").textContent = "—";
+    document.getElementById("score").textContent = `Note : — / ${totalMaxPoints()}`;
+  }
+
+  // Init + listeners
+  newQuestions();
+
+  document.getElementById("validateBtn").addEventListener("click", validateAll);
+  document.getElementById("resetBtn").addEventListener("click", resetAll);
+  document.getElementById("newBtn").addEventListener("click", ()=>{
+    newQuestions();
+    resetAll();
+  });
+  document.getElementById("amount").addEventListener("change", ()=>{
+    newQuestions();
+    resetAll();
+  });
+</script>
+</body>
+</html>
